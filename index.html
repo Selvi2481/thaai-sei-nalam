@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thaai Sei Nalam | Newborn & Maternity</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <style>
+    :root {
+      --mint: #6FCF97;
+      --mint-600: #53b879;
+      --muted: #7b7b7b;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+    }
+
+    .hero-section {
+      background: linear-gradient(180deg, #ffeaf1 0%, #ffffff 100%);
+      padding: 80px 0;
+    }
+
+    .hero-section h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .btn-primary {
+      background-color: #f9a8d4;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #f472b6;
+    }
+
+    /* Mint accent buttons used for payment CTA etc. */
+    .btn-mint {
+      background-color: var(--mint);
+      color: #fff;
+      border: none;
+    }
+    .btn-mint:hover { background-color: var(--mint-600); }
+
+    .product-card img {
+      border-radius: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .quick-view {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .product-card:hover .quick-view {
+      opacity: 1;
+    }
+
+    footer {
+      background-color: #fff0f6;
+      padding: 30px 0;
+      font-size: 0.9rem;
+    }
+
+    /* Floating Instagram Button */
+    .floating-buttons {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 1000;
+    }
+
+    .floating-buttons a {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      font-size: 26px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .floating-buttons a:hover {
+      transform: scale(1.06);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+    }
+
+    /* Cart list small tweaks */
+    .cart-qty {
+      width: 92px;
+    }
+    .cart-item-name { max-width: 220px; display: inline-block; vertical-align: middle; }
+
+    /* Payment form styling */
+    .payment-step {
+      display: none;
+    }
+    .payment-step.active { display: block; }
+
+    .payment-card {
+      border: 1px solid #eef7f0;
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfffc;
+    }
+
+    .form-label { font-weight: 600; color: var(--muted); }
+
+    /* Thank you modal + confetti canvas */
+    .thankyou-title { color: var(--mint); font-weight: 700; }
+    #confetti-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2000;
+    }
+
+    /* Small responsive */
+    @media (max-width: 576px) {
+      .cart-item-name { max-width: 140px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="logo1.png" alt="Thaai Sei Nalam" width="45" class="me-2 rounded-circle" />
+        <div>
+          <div>Thaai Sei Nalam</div>
+          <small class="text-muted">தாய் செய் நலம் • Newborn & Maternity</small>
+        </div>
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#mainNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div id="mainNav" class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#shop">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <button
+          class="btn btn-outline-secondary ms-lg-3"
+          data-bs-toggle="modal"
+          data-bs-target="#cartModal"
+        >
+          🛒 Cart (<span id="cart-count">0</span>)
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 class="display-5 mb-3">Comfort & Joy for Every Journey</h1>
+          <p class="lead mb-4">
+            Curated newborn essentials and pregnancy-friendly apparel crafted
+            from soft, breathable fabrics. Thoughtfully designed for the first
+            days and beyond.
+          </p>
+          <a href="#shop" class="btn btn-primary rounded-pill px-4 me-2">Shop New Arrivals</a>
+          <a href="#about" class="btn btn-outline-secondary rounded-pill px-4">Learn More</a>
+        </div>
+        <div class="col-lg-6 text-center">
+          <img src="mother.png" alt="Mother" class="img-fluid rounded shadow-sm me-3" width="220" />
+          <img src="child.jpg" alt="Child" class="img-fluid rounded shadow-sm" width="180" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop Section -->
+  <section id="shop" class="py-5">
+    <div class="container text-center mb-4">
+      <h2 class="fw-semibold mb-3">Our Collection</h2>
+      <p class="text-muted">Explore cozy, stylish, and safe products for both mother and baby.</p>
+    </div>
+
+    <div class="container">
+      <div class="row g-4" id="product-list"></div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-5 bg-light">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <img src="about.png" alt="About" class="img-fluid rounded shadow-sm" />
+        </div>
+        <div class="col-lg-6">
+          <h2 class="fw-semibold mb-3">About Thaai Sei Nalam</h2>
+          <p class="text-muted">
+            We are dedicated to bringing comfort, care, and confidence to mothers and newborns.
+            Our products are made from organic, sustainable fabrics and crafted with love in every detail.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-5">
+    <div class="container text-center">
+      <h2 class="fw-semibold mb-4">Contact Us</h2>
+      <p class="mb-4">Have questions? We’d love to hear from you!</p>
+      <a href="mailto:info@thaaisinallam.com" class="btn btn-primary rounded-pill px-4">Email Us</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p class="mb-1">© 2025 Thaai Sei Nalam. All rights reserved.</p>
+      <p class="mb-0"><a href="#privacy">Privacy Policy</a> • <a href="#terms">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <!-- Floating Instagram Button -->
+  <div class="floating-buttons">
+    <a href="https://www.instagram.com/thaaiseinalam" target="_blank" title="Visit Instagram">
+      <i class="bi bi-instagram"></i>
+    </a>
+  </div>
+
+  <!-- Cart Modal (Step 1: Cart) -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <!-- Modal header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartModalLabel">🛒 My Cart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" id="cartCloseBtn"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <!-- CART VIEW -->
+          <div id="cart-view">
+            <ul id="cart-items" class="list-group mb-3"></ul>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <strong>Total:</strong>
+              <span id="cart-total">₹0</span>
+            </div>
+            <div class="text-end">
+              <button class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Continue Shopping</button>
+              <button id="proceedPaymentBtn" class="btn btn-mint">Proceed to Payment</button>
+            </div>
+          </div>
+
+          <!-- PAYMENT VIEW (hidden initially) -->
+          <div id="payment-view" class="payment-step">
+            <h6 class="mb-3">Payment Details</h6>
+            <div class="mb-3 payment-card">
+              <div class="mb-2"><small class="text-muted">Order Total</small></div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div><strong id="summary-count">0 items</strong></div>
+                <div class="fs-5 fw-semibold" id="summary-total">₹0</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input id="payer-name" type="text" class="form-control" placeholder="Your full name">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Shipping Address</label>
+                <textarea id="payer-address" rows="2" class="form-control" placeholder="House, Street, City, PIN"></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Choose Payment Method</label>
+                <div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payMethod" id="payCard" value="card" checked>
+                    <label class="form-check-label" for="payCard">💳 Card</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payMethod" id="payUPI" value="upi">
+                    <label class="form-check-label" for="payUPI">🪙 UPI</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payMethod" id="payCOD" value="cod">
+                    <label class="form-check-label" for="payCOD">🚚 Cash on Delivery</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card fields -->
+              <div id="card-fields" class="mb-3">
+                <div class="row g-2">
+                  <div class="col-12">
+                    <label class="form-label">Card Number</label>
+                    <input id="card-number" type="text" class="form-control" placeholder="4242 4242 4242 4242" maxlength="19">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">Expiry</label>
+                    <input id="card-expiry" type="text" class="form-control" placeholder="MM/YY" maxlength="5">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">CVV</label>
+                    <input id="card-cvv" type="password" class="form-control" placeholder="123" maxlength="4">
+                  </div>
+                </div>
+              </div>
+
+              <!-- UPI field -->
+              <div id="upi-field" class="mb-3" style="display:none;">
+                <label class="form-label">UPI ID</label>
+                <input id="upi-id" type="text" class="form-control" placeholder="example@upi">
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <button id="backToCartBtn" class="btn btn-outline-secondary">Back to Cart</button>
+                <button id="payNowBtn" class="btn btn-mint">Pay Now</button>
+              </div>
+            </div>
+          </div>
+        </div> <!-- modal-body -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick View Modal (kept exactly as before) -->
+  <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="product-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="product-img" src="" alt="" class="img-fluid mb-3 rounded" />
+          <p id="product-desc" class="text-muted"></p>
+          <p id="product-price" class="fw-semibold"></p>
+          <button class="btn btn-primary" id="addToCartBtn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thank You Modal (centered, with confetti canvas) -->
+  <div class="modal fade" id="thankYouModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content position-relative overflow-hidden">
+        <canvas id="confetti-canvas"></canvas>
+        <div class="modal-body text-center py-5">
+          <div class="mb-3">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="11" stroke="#DFF7EA" stroke-width="2" fill="#E9FFF3"/>
+              <path d="M7.5 12.5l2.5 2.5 6.5-6.5" stroke="#53b879" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h4 class="thankyou-title">Thank you! 🎉</h4>
+          <p class="text-muted mb-3">Your order has been placed successfully.</p>
+          <button class="btn btn-mint" data-bs-dismiss="modal" id="thankCloseBtn">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /***************
+     * Data & Elements
+     ***************/
+    const products = [
+      { id: 1, name: "Organic Cotton Romper", price: 799, desc: "Soft & breathable for everyday comfort.", img: "baby1.jpg" },
+      { id: 2, name: "Maternity Dress", price: 1299, desc: "Designed for comfort through every stage.", img: "baby2.jpg" },
+      { id: 3, name: "Swaddle Blanket", price: 699, desc: "Wrap your baby in pure softness.", img: "baby3.jpg" },
+      { id: 4, name: "Feeding Pillow", price: 999, desc: "Perfect support for mom and baby during feeding.", img: "baby4.jpg" },
+      { id: 5, name: "Cotton Mittens Set", price: 499, desc: "Protect tiny hands with gentle cotton mittens.", img: "baby5.jpg" },
+      { id: 6, name: "Baby Bath Towel", price: 899, desc: "Super absorbent towel for your baby’s comfort.", img: "baby6.jpg" }
+    ];
+
+    const productList = document.getElementById('product-list');
+    const cartCountEl = document.getElementById('cart-count');
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartTotalEl = document.getElementById('cart-total');
+    const proceedPaymentBtn = document.getElementById('proceedPaymentBtn');
+    const paymentView = document.getElementById('payment-view');
+    const cartView = document.getElementById('cart-view');
+    const backToCartBtn = document.getElementById('backToCartBtn');
+    const payNowBtn = document.getElementById('payNowBtn');
+    const summaryCount = document.getElementById('summary-count');
+    const summaryTotal = document.getElementById('summary-total');
+
+    const quickViewModal = new bootstrap.Modal(document.getElementById('quickViewModal'));
+    const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+    const thankModalEl = document.getElementById('thankYouModal');
+    const thankModal = new bootstrap.Modal(thankModalEl);
+
+    let cart = []; // items: {id, qty}
+
+    /***********************
+     * Render product cards
+     ***********************/
+    function renderProducts() {
+      productList.innerHTML = '';
+      products.forEach(p => {
+        productList.innerHTML += `
+          <div class="col-12 col-sm-6 col-lg-4">
+            <div class="card product-card position-relative shadow-sm h-100">
+              <img src="${p.img}" class="card-img-top" alt="${p.name}">
+              <div class="card-body text-center">
+                <h5 class="card-title">${p.name}</h5>
+                <p class="card-text text-muted">${p.desc}</p>
+                <p class="fw-semibold mb-3">₹${p.price}</p>
+                <button class="btn btn-sm btn-outline-primary me-2" onclick="openQuickView(${p.id})">Quick View</button>
+                <button class="btn btn-sm btn-primary" onclick="addToCart(${p.id})">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    renderProducts();
+
+    /***********************
+     * Quick view logic
+     ***********************/
+    function openQuickView(id) {
+      const p = products.find(x => x.id === id);
+      document.getElementById('product-title').innerText = p.name;
+      document.getElementById('product-img').src = p.img;
+      document.getElementById('product-desc').innerText = p.desc;
+      document.getElementById('product-price').innerText = "₹" + p.price;
+      document.getElementById('addToCartBtn').onclick = () => {
+        addToCart(p.id);
+      };
+      quickViewModal.show();
+    }
+
+    /***********************
+     * Cart helpers
+     ***********************/
+    function findCartItem(id) { return cart.find(ci => ci.id === id); }
+
+    function addToCart(id) {
+      const existing = findCartItem(id);
+      if (existing) existing.qty += 1;
+      else cart.push({ id, qty: 1 });
+      updateCart();
+      // close quick view if open
+      try { quickViewModal.hide(); } catch(e){}
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(ci => ci.id !== id);
+      updateCart();
+    }
+
+    function changeQty(id, qty) {
+      const it = findCartItem(id);
+      if (!it) return;
+      it.qty = qty < 1 ? 1 : qty;
+      updateCart();
+    }
+
+    function updateCart() {
+      cartItemsEl.innerHTML = '';
+      let total = 0;
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = '<li class="list-group-item text-center text-muted">Your cart is empty.</li>';
+      } else {
+        cart.forEach(ci => {
+          const p = products.find(x => x.id === ci.id);
+          const lineTotal = p.price * ci.qty;
+          total += lineTotal;
+          cartItemsEl.innerHTML += `
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <div class="cart-item-name">${p.name}</div>
+                <small class="text-muted">₹${p.price} each</small>
+              </div>
+              <div class="d-flex align-items-center">
+                <input type="number" min="1" class="form-control form-control-sm me-2 cart-qty" value="${ci.qty}" onchange="onQtyChange(${ci.id}, this.value)">
+                <div class="fw-semibold">₹${lineTotal}</div>
+                <button class="btn btn-link btn-sm text-danger ms-2" onclick="removeFromCart(${ci.id})">Remove</button>
+              </div>
+            </li>
+          `;
+        });
+      }
+
+      cartCountEl.innerText = cart.reduce((s,i) => s + i.qty, 0);
+      cartTotalEl.innerText = "₹" + total;
+      // update summary fields (for payment)
+      summaryCount.innerText = cart.reduce((s,i) => s + i.qty, 0) + " items";
+      summaryTotal.innerText = "₹" + total;
+    }
+
+    // helpers used by inline onchange attributes
+    window.onQtyChange = function(id, val) {
+      const qty = parseInt(val) || 1;
+      changeQty(id, qty);
+    };
+
+    /*************************
+     * Proceed to payment flow
+     *************************/
+    proceedPaymentBtn.addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Your cart is empty.');
+        return;
+      }
+      cartView.style.display = 'none';
+      paymentView.classList.add('active');
+      // set summary
+      updateCart();
+    });
+
+    backToCartBtn.addEventListener('click', () => {
+      paymentView.classList.remove('active');
+      cartView.style.display = '';
+    });
+
+    /*************************
+     * Payment method toggles
+     *************************/
+    const payCardRad = document.getElementById('payCard');
+    const payUPIRad = document.getElementById('payUPI');
+    const payCODRad = document.getElementById('payCOD');
+    const cardFields = document.getElementById('card-fields');
+    const upiField = document.getElementById('upi-field');
+
+    function togglePaymentFields() {
+      if (payCardRad.checked) {
+        cardFields.style.display = '';
+        upiField.style.display = 'none';
+      } else if (payUPIRad.checked) {
+        cardFields.style.display = 'none';
+        upiField.style.display = '';
+      } else { // cod
+        cardFields.style.display = 'none';
+        upiField.style.display = 'none';
+      }
+    }
+
+    payCardRad.addEventListener('change', togglePaymentFields);
+    payUPIRad.addEventListener('change', togglePaymentFields);
+    payCODRad.addEventListener('change', togglePaymentFields);
+
+    togglePaymentFields(); // initial
+
+    /*************************
+     * Pay Now (mock)
+     *************************/
+    payNowBtn.addEventListener('click', () => {
+      // simple validation
+      const name = document.getElementById('payer-name').value.trim();
+      const address = document.getElementById('payer-address').value.trim();
+      const method = document.querySelector('input[name="payMethod"]:checked').value;
+
+      if (!name || !address) {
+        alert('Please enter your name and shipping address.');
+        return;
+      }
+
+      if (method === 'card') {
+        const cn = document.getElementById('card-number').value.replace(/\s/g,'');
+        const exp = document.getElementById('card-expiry').value.trim();
+        const cvv = document.getElementById('card-cvv').value.trim();
+        if (cn.length < 12 || exp.length < 4 || cvv.length < 3) {
+          alert('Please enter valid card details (this is a mock).');
+          return;
+        }
+      } else if (method === 'upi') {
+        const upi = document.getElementById('upi-id').value.trim();
+        if (!upi.includes('@')) {
+          alert('Please enter a valid UPI ID (example@upi).');
+          return;
+        }
+      }
+
+      // simulate processing -> show thank you modal with confetti
+      cartModal.hide();
+
+      // small timeout for modal hide animation
+      setTimeout(() => {
+        startConfetti();
+        thankModal.show();
+      }, 400);
+
+      // after confirmation, clear cart
+      clearCartAfterPayment();
+    });
+
+    function clearCartAfterPayment() {
+      cart = [];
+      updateCart();
+      // clear payment form fields
+      document.getElementById('payer-name').value = '';
+      document.getElementById('payer-address').value = '';
+      document.getElementById('card-number').value = '';
+      document.getElementById('card-expiry').value = '';
+      document.getElementById('card-cvv').value = '';
+      document.getElementById('upi-id').value = '';
+      // return modal to cart view for next time
+      paymentView.classList.remove('active');
+      cartView.style.display = '';
+    }
+
+    /*************************
+     * Confetti animation (pastel)
+     *************************/
+    function startConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      // pastel colors
+      const colors = ['#FFD6E0', '#DFF7EA', '#FFF5CC', '#E6F7FF', '#FDEFF5', '#E9FFF3'];
+
+      // create pieces
+      const pieces = [];
+      const count = 40;
+      for (let i = 0; i < count; i++) {
+        pieces.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          w: 6 + Math.random() * 8,
+          h: 8 + Math.random() * 10,
+          vx: -2 + Math.random() * 4,
+          vy: 2 + Math.random() * 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rot: Math.random() * 360,
+          spin: -0.1 + Math.random() * 0.2
+        });
+      }
+
+      let animationId;
+      const duration = 3500;
+      const start = performance.now();
+
+      function frame(now) {
+        const t = now - start;
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        for (let p of pieces) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.spin;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+          ctx.restore();
+        }
+        if (t < duration) {
+          animationId = requestAnimationFrame(frame);
+        } else {
+          cancelAnimationFrame(animationId);
+          // clear canvas after a short delay
+          setTimeout(() => ctx.clearRect(0,0,canvas.width,canvas.height), 500);
+        }
+      }
+      animationId = requestAnimationFrame(frame);
+
+      // stop confetti when modal closes
+      thankModalEl.addEventListener('hidden.bs.modal', () => {
+        cancelAnimationFrame(animationId);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+      }, { once: true });
+    }
+
+    // close thank you and stop confetti if user clicks Close
+    document.getElementById('thankCloseBtn').addEventListener('click', () => {
+      // modal will hide via data-bs-dismiss attribute
+    });
+
+    /*************************
+     * Init: ensure cart updates (if persisted later)
+     *************************/
+    updateCart();
+
+  </script>
+</body>
+</html>
