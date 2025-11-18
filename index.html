@@ -19,6 +19,64 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <style>
+    .about-section {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9); /* soft white overlay */
+    }
+
+    .about-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('aboutimage2.jpg'); /* your image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3; /* adjust transparency */
+    z-index: -1;
+    }
+
+    /* Fixed product image class used by renderProducts() */
+    .fixed-product-img {
+      width: 100%;
+      height: 300px;     /* change to 250/320/350 as you prefer */
+      object-fit: cover; /* crop nicely without stretching */
+      border-radius: 10px;
+      display: block;
+    }
+
+    /* keep other product-card styling (no duplicate width/height here) */
+    .product-card {
+      overflow: hidden;
+    }
+    /*.product-card img {
+      transition: transform 0.3s ease;
+      /* don't set width/height here — .fixed-product-img handles that */
+
+    .product-card img {
+    width: 100%;
+    height: 400px;      /* uniform height */
+    object-fit: contain;      /* clean crop without distortion */
+    object-position: center;/* centers the subject */
+    border-radius: 8px 8px 4 4;
+    }
+    .product-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .navbar {
+      padding-left: 10px;
+    }
+
+    .navbar .navbar-brand {
+      margin-left: 0;      /* remove default gap */
+      padding-left: 0;     /* ensure it touches left side */
+    }
+
+    .navbar .container {
+      padding-left: 0 !important;
+    }
+
     :root {
       --mint: #6FCF97;
       --mint-600: #53b879;
@@ -56,22 +114,12 @@
       background-color: #f472b6;
     }
 
-    /* Mint accent buttons used for payment CTA etc. */
     .btn-mint {
       background-color: var(--mint);
       color: #fff;
       border: none;
     }
     .btn-mint:hover { background-color: var(--mint-600); }
-
-    .product-card img {
-      border-radius: 1rem;
-      transition: transform 0.3s ease;
-    }
-
-    .product-card:hover img {
-      transform: scale(1.05);
-    }
 
     .quick-view {
       opacity: 0;
@@ -92,7 +140,6 @@
       font-size: 0.9rem;
     }
 
-    /* Floating Instagram Button */
     .floating-buttons {
       position: fixed;
       bottom: 25px;
@@ -120,13 +167,11 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
     }
 
-    /* Cart list small tweaks */
     .cart-qty {
       width: 92px;
     }
     .cart-item-name { max-width: 220px; display: inline-block; vertical-align: middle; }
 
-    /* Payment form styling */
     .payment-step {
       display: none;
     }
@@ -141,7 +186,6 @@
 
     .form-label { font-weight: 600; color: var(--muted); }
 
-    /* Thank you modal + confetti canvas */
     .thankyou-title { color: var(--mint); font-weight: 700; }
     #confetti-canvas {
       position: absolute;
@@ -150,7 +194,6 @@
       z-index: 2000;
     }
 
-    /* Small responsive */
     @media (max-width: 576px) {
       .cart-item-name { max-width: 140px; }
     }
@@ -225,6 +268,7 @@
     </div>
 
     <div class="container">
+      <!-- product-list MUST exist exactly once -->
       <div class="row g-4" id="product-list"></div>
     </div>
   </section>
@@ -234,7 +278,7 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6">
-          <img src="about.png" alt="About" class="img-fluid rounded shadow-sm" />
+          <img src="logo1.png" alt="About" class="img-fluid rounded shadow-sm" />
         </div>
         <div class="col-lg-6">
           <h2 class="fw-semibold mb-3">About Thaai Sei Nalam</h2>
@@ -369,7 +413,7 @@
     </div>
   </div>
 
-  <!-- Quick View Modal (kept exactly as before) -->
+  <!-- Quick View Modal -->
   <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -415,12 +459,12 @@
      * Data & Elements
      ***************/
     const products = [
-      { id: 1, name: "Organic Cotton Romper", price: 799, desc: "Soft & breathable for everyday comfort.", img: "baby1.jpg" },
-      { id: 2, name: "Maternity Dress", price: 1299, desc: "Designed for comfort through every stage.", img: "baby2.jpg" },
-      { id: 3, name: "Swaddle Blanket", price: 699, desc: "Wrap your baby in pure softness.", img: "baby3.jpg" },
-      { id: 4, name: "Feeding Pillow", price: 999, desc: "Perfect support for mom and baby during feeding.", img: "baby4.jpg" },
-      { id: 5, name: "Cotton Mittens Set", price: 499, desc: "Protect tiny hands with gentle cotton mittens.", img: "baby5.jpg" },
-      { id: 6, name: "Baby Bath Towel", price: 899, desc: "Super absorbent towel for your baby’s comfort.", img: "baby6.jpg" }
+      { id: 1, name: "Organic Cotton Romper", price: 799, desc: "Soft & breathable for everyday comfort.", img: "ROMPER.PNG" },
+      { id: 2, name: "Maternity Dress", price: 1299, desc: "Designed for comfort through every stage.", img: "PILLOW.PNG" },
+      { id: 3, name: "Swaddle Blanket", price: 699, desc: "Wrap your baby in pure softness.", img: "SWADDLE.PNG" },
+      { id: 4, name: "Feeding Pillow", price: 999, desc: "Perfect support for mom and baby during feeding.", img: "MATERNITY2.PNG" },
+      { id: 5, name: "Cotton Mittens Set", price: 499, desc: "Protect tiny hands with gentle cotton mittens.", img: "MATERNITY3.PNG" },
+      { id: 6, name: "Baby Bath Towel", price: 899, desc: "Super absorbent towel for your baby’s comfort.", img: "MATERNITY4.PNG" }
     ];
 
     const productList = document.getElementById('product-list');
@@ -451,7 +495,7 @@
         productList.innerHTML += `
           <div class="col-12 col-sm-6 col-lg-4">
             <div class="card product-card position-relative shadow-sm h-100">
-              <img src="${p.img}" class="card-img-top" alt="${p.name}">
+              <img src="${p.img}" class="fixed-product-img" alt="${p.name}">
               <div class="card-body text-center">
                 <h5 class="card-title">${p.name}</h5>
                 <p class="card-text text-muted">${p.desc}</p>
@@ -541,7 +585,6 @@
       summaryTotal.innerText = "₹" + total;
     }
 
-    // helpers used by inline onchange attributes
     window.onQtyChange = function(id, val) {
       const qty = parseInt(val) || 1;
       changeQty(id, qty);
@@ -557,7 +600,6 @@
       }
       cartView.style.display = 'none';
       paymentView.classList.add('active');
-      // set summary
       updateCart();
     });
 
@@ -598,7 +640,6 @@
      * Pay Now (mock)
      *************************/
     payNowBtn.addEventListener('click', () => {
-      // simple validation
       const name = document.getElementById('payer-name').value.trim();
       const address = document.getElementById('payer-address').value.trim();
       const method = document.querySelector('input[name="payMethod"]:checked').value;
@@ -624,30 +665,25 @@
         }
       }
 
-      // simulate processing -> show thank you modal with confetti
       cartModal.hide();
 
-      // small timeout for modal hide animation
       setTimeout(() => {
         startConfetti();
         thankModal.show();
       }, 400);
 
-      // after confirmation, clear cart
       clearCartAfterPayment();
     });
 
     function clearCartAfterPayment() {
       cart = [];
       updateCart();
-      // clear payment form fields
       document.getElementById('payer-name').value = '';
       document.getElementById('payer-address').value = '';
       document.getElementById('card-number').value = '';
       document.getElementById('card-expiry').value = '';
       document.getElementById('card-cvv').value = '';
       document.getElementById('upi-id').value = '';
-      // return modal to cart view for next time
       paymentView.classList.remove('active');
       cartView.style.display = '';
     }
@@ -661,10 +697,7 @@
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
 
-      // pastel colors
       const colors = ['#FFD6E0', '#DFF7EA', '#FFF5CC', '#E6F7FF', '#FDEFF5', '#E9FFF3'];
-
-      // create pieces
       const pieces = [];
       const count = 40;
       for (let i = 0; i < count; i++) {
@@ -703,29 +736,22 @@
           animationId = requestAnimationFrame(frame);
         } else {
           cancelAnimationFrame(animationId);
-          // clear canvas after a short delay
           setTimeout(() => ctx.clearRect(0,0,canvas.width,canvas.height), 500);
         }
       }
       animationId = requestAnimationFrame(frame);
 
-      // stop confetti when modal closes
       thankModalEl.addEventListener('hidden.bs.modal', () => {
         cancelAnimationFrame(animationId);
         ctx.clearRect(0,0,canvas.width,canvas.height);
       }, { once: true });
     }
 
-    // close thank you and stop confetti if user clicks Close
     document.getElementById('thankCloseBtn').addEventListener('click', () => {
-      // modal will hide via data-bs-dismiss attribute
+      // modal hides automatically
     });
 
-    /*************************
-     * Init: ensure cart updates (if persisted later)
-     *************************/
     updateCart();
-
   </script>
 </body>
 </html>
